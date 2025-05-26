@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Crear Turno</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      padding-top: 4.5rem;
+      background-color: #f8f9fa;
+    }
+    .form-container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Emprendedores</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Alternar navegación">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/usuarios">Usuarios</a></li>
+          <li class="nav-item"><a class="nav-link" href="/trabajadores">Trabajadores</a></li>
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="/turnos">Turnos</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Formulario -->
+  <div class="container">
+    <div class="form-container">
+      <h2 class="mb-4 text-center">📅 Crear Nuevo Turno</h2>
+
+      <form action="/turnos" method="POST">
+        <div class="mb-3">
+          <label for="correoCliente" class="form-label">Correo del Cliente</label>
+          <input type="email" id="correoCliente" name="correoCliente" class="form-control" required autocomplete="off" placeholder="cliente@correo.com">
+        </div>
+
+        <div class="mb-3">
+          <label for="telefono" class="form-label">Teléfono</label>
+          <input type="tel" id="telefono" name="telefono" class="form-control" required autocomplete="off" pattern="[0-9]{7,15}" placeholder="Ej: 1234567890">
+        </div>
+
+        <div class="mb-3">
+          <label for="negocio" class="form-label">Nombre del Negocio</label>
+          <input type="text" id="negocio" name="negocio" class="form-control" required autocomplete="off" minlength="2" maxlength="100">
+        </div>
+
+        <div class="mb-3">
+          <label for="trabajador" class="form-label">Trabajador</label>
+          <select id="trabajador" name="trabajador" class="form-select" required>
+            <% if (trabajadores && trabajadores.length > 0) { %>
+              <% trabajadores.forEach(t => { %>
+                <option value="<%= t._id %>"><%= t.nombre %> - <%= t.puesto %></option>
+              <% }) %>
+            <% } else { %>
+              <option disabled selected>No hay trabajadores disponibles</option>
+            <% } %>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="fecha" class="form-label">Fecha</label>
+          <input type="date" id="fecha" name="fecha" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="hora" class="form-label">Hora</label>
+          <input type="time" id="hora" name="hora" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="nota" class="form-label">Nota (opcional)</label>
+          <textarea id="nota" name="nota" class="form-control" rows="3" placeholder="Comentario adicional..."></textarea>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <a href="/turnos" class="btn btn-secondary">← Cancelar</a>
+          <button type="submit" class="btn btn-success">💾 Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
